@@ -3,5 +3,11 @@ public class Product {
     String name;
     double price;
     String category;
-    int stockQuantity;
+
+    public Product(int productID, String name, double price, String category) {
+        this.productID = productID;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
 }

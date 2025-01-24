@@ -17,45 +17,11 @@ public class Order {
         this.orderTime = orderTime;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public void addItem(OrderItem item) {
+        items.add(item);
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void removeItem(OrderItem item) {
+        items.remove(item);
     }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public List<OrderItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(LocalDateTime orderTime) {
-        this.orderTime = orderTime;
-    }
-
-
 }
