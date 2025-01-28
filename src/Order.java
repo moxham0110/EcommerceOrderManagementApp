@@ -27,8 +27,12 @@ public class Order {
         items.remove(item);
     }
 
-    public void processOrder() {
+    public void processOrder(Payment payment) {
+        setPayment(payment);
         this.status = OrderStatus.PROCESSED;
+        //todo: reduce stockCount for product stockCount - quantity in orderitem
+        //todo: If stockCount is below zero then throw exception and cancel order.
+
     }
 
     public void shipOrder() {
