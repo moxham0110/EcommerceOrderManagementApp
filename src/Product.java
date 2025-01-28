@@ -1,7 +1,7 @@
 public class Product {
     int productID;
     String name;
-    double price;
+    private double price;
     String category;
 
     public Product(int productID, String name, double price, String category) {
@@ -9,5 +9,9 @@ public class Product {
         this.name = name;
         this.price = price;
         this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

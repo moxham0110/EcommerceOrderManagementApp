@@ -12,4 +12,7 @@ public class OrderItem {
         this.product = product;
     }
 
+    public double getItemSubTotal() {
+        return quantity * product.getPrice();
+    }
 }
