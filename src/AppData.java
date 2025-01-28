@@ -7,14 +7,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppService {
+public class AppData {
 
-    static List<Customer> allCustomers = new ArrayList<>();
-    static List<Order> allOrders = new ArrayList<>();
-    static List<OrderItem> allOrderItems = new ArrayList<>();
-    static List<Product> allProducts = new ArrayList<>();
+    public static List<Customer> allCustomers = new ArrayList<>();
+    public static List<Order> allOrders = new ArrayList<>();
+    public static List<OrderItem> allOrderItems = new ArrayList<>();
+    public static List<Product> allProducts = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void loadData(){
         readCustomerData();
         readOrderData();
         readProductsData();
@@ -131,5 +131,4 @@ public class AppService {
             e.printStackTrace();
         }
     }
-
 }
