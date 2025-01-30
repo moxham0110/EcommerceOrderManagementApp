@@ -10,6 +10,11 @@ public class Order {
     OrderStatus status;
     LocalDateTime orderTime;
     Payment payment;
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
     Discount discount;
 
     public Order(Customer customer, String status, LocalDateTime orderTime) {

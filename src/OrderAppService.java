@@ -35,6 +35,7 @@ public class OrderAppService {
         getAvailableProducts();
     }
 
+    //map() and sorted()
     private void getAllCustomerNamesSorted(){
         List<String> customerNames = AppData.allCustomers.stream()
                 .map(Customer::getName)
@@ -45,6 +46,7 @@ public class OrderAppService {
         System.out.println(customerNames);
     }
 
+    //min() and Comparator.comparing()
     private void getCheapestProduct(){
         Product cheapestProduct = AppData.allProducts.stream()
                 .min(Comparator.comparing(Product::getPrice)).orElseThrow();
@@ -52,6 +54,8 @@ public class OrderAppService {
         System.out.println("Product: " + cheapestProduct.name + " -- Price: " + cheapestProduct.getPrice());
     }
 
+
+    //filter() and count()
     private void getAvailableProducts(){
         long availableProducts = AppData.allProducts.stream()
                 .filter(p -> p.stockCount > 0)
@@ -60,6 +64,23 @@ public class OrderAppService {
         System.out.println("Available Products: " + availableProducts);
     }
 
+    //findAny() and Consumer Predicate
+    private void getRandomDeliveredOrder(){
+        Optional<Order> randomDeliveredOrder = AppData.allOrders.stream()
+                .filter(o -> o.status.equals(OrderStatus.DELIVERED))
+                .findAny();
 
+        //todo: Improve messaging here - give order items and costs
+        randomDeliveredOrder.ifPresent(order -> System.out.println("Random order:\nID: " + order.orderID));
+    }
 
+    //findFirst()
+    private void getFirstEverOrderMade(){
+        Optional<Order> firstOrder = AppData.allOrders.stream()
+                .sorted(Comparator.comparing(Order::getOrderTime))
+                .findFirst();
+
+        //todo: Localisation - print different region date types
+        firstOrder.ifPresent(order -> System.out.println("First order made on:" + order.orderTime));
+    }
 }
