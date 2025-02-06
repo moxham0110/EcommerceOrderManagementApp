@@ -1,7 +1,5 @@
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class OrderAppService {
 
@@ -64,7 +62,7 @@ public class OrderAppService {
         System.out.println("Available Products: " + availableProducts);
     }
 
-    //findAny() and Consumer Predicate
+    //findAny() and Consumer Predicate filter()
     private void getRandomDeliveredOrder(){
         Optional<Order> randomDeliveredOrder = AppData.allOrders.stream()
                 .filter(o -> o.status.equals(OrderStatus.DELIVERED))
@@ -74,7 +72,7 @@ public class OrderAppService {
         randomDeliveredOrder.ifPresent(order -> System.out.println("Random order:\nID: " + order.orderID));
     }
 
-    //findFirst()
+    //findFirst() sorted()
     private void getFirstEverOrderMade(){
         Optional<Order> firstOrder = AppData.allOrders.stream()
                 .sorted(Comparator.comparing(Order::getOrderTime))
@@ -83,4 +81,67 @@ public class OrderAppService {
         //todo: Localisation - print different region date types
         firstOrder.ifPresent(order -> System.out.println("First order made on:" + order.orderTime));
     }
+
+    //anyMatch()
+    private void isOrderAbove300(){
+        boolean hasBigOrder = AppData.allOrders.stream()
+                .anyMatch(o -> o.getTotalCost() > 300);
+
+        System.out.println("Is there an order above 300? " + hasBigOrder);
+    }
+
+    //map() and forEach()
+    private void displayCustomerEmails(){
+        AppData.allCustomers.stream()
+                .map(Customer::getEmail)
+                .forEach(System.out::println);
+    }
+
+    //Collectors.toMap()
+    private void getMapOfOrders(){
+        Map<Integer, Order> orderMap = AppData.allOrders.stream()
+                .collect(Collectors.toMap(Order::getOrderID, o -> o));
+
+        System.out.println(orderMap);
+    }
+
+    //Collectors.groupingBy()
+    private void groupOrdersByStatus(){
+        Map<OrderStatus, List<Order>> ordersByStatus = AppData.allOrders.stream()
+                .collect(Collectors.groupingBy(Order::getStatus));
+
+        System.out.println(ordersByStatus);
+    }
+
+    //Collectors.partitioningBy()
+    private void partitionOrdersToCheapAndExpensive(){
+        Map<Boolean, List<Order>> partitionedOrders = AppData.allOrders.stream()
+                .collect(Collectors.partitioningBy(o -> o.getTotalCost() > 300));
+
+        System.out.println("Expensive orders: " + partitionedOrders.get(true));
+        System.out.println("Cheap orders: " + partitionedOrders.get(false));
+    }
+
+    //distinct()
+    private void displayUniqueProductCategories(){
+        List<String> categories = AppData.allProducts.stream()
+                .map(Product::getCategory)
+                .distinct()
+                .toList();
+
+        System.out.println(categories);
+    }
+
+    //limit()
+    private void limitFirst3Products(){
+        List<Product> top3Products = AppData.allProducts.stream()
+                .limit(3)
+                .toList();
+
+        System.out.println(top3Products);
+    }
+
+
+
+
 }

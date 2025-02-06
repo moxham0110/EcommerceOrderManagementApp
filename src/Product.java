@@ -19,4 +19,8 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public String getCategory() {
+        return category;
+    }
 }

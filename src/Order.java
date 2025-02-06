@@ -10,12 +10,21 @@ public class Order {
     OrderStatus status;
     LocalDateTime orderTime;
     Payment payment;
+    Discount discount;
 
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    Discount discount;
+
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
 
     public Order(Customer customer, String status, LocalDateTime orderTime) {
         this.orderID = orderIDCounter++;
