@@ -1,25 +1,11 @@
 import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.function.Supplier;
 
-public class Payment {
-    static int paymentIDCounter = 1;
-    int paymentID;
-    Order order;
-    PaymentMethod method;
-    LocalDateTime timestamp;
+public record Payment(String paymentID, Order order, PaymentMethod method, LocalDateTime timestamp) {
+    private static final Supplier<String> generatePaymentID = () -> "PAYMENT-" + UUID.randomUUID();
 
     public Payment(Order order, PaymentMethod method, LocalDateTime timestamp) {
-        this.paymentID = paymentIDCounter++;
-        this.order = order;
-        this.method = method;
-        this.timestamp = timestamp;
-    }
-
-    public double getFinalPrice(){
-        double totalPrice = 0.0;
-        for(var item : order.items){
-            totalPrice += item.getItemSubTotal();
-        };
-
-        return totalPrice;
+        this(generatePaymentID.get(), order, method, timestamp);
     }
 }

@@ -1,4 +1,1 @@
-public class Discount {
-    String description;
-    double value;
-}
+public record Discount(String description, double value) {}

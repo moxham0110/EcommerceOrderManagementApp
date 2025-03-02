@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Order {
     static int orderIDCounter = 1000;
@@ -15,8 +17,6 @@ public class Order {
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
-
-
 
     public int getOrderID() {
         return orderID;
@@ -41,11 +41,18 @@ public class Order {
         items.remove(item);
     }
 
+    //Consumer lambda
+    Consumer<Customer> sendEmail = customer ->
+            System.out.println("Sending email to " + customer.getEmail());
+
     public void processOrder(Payment payment) {
-        setPayment(payment);
-        this.status = OrderStatus.PROCESSED;
         //todo: reduce stockCount for product stockCount - quantity in orderitem
         //todo: If stockCount is below zero then throw exception and cancel order.
+
+
+        setPayment(payment);
+        this.status = OrderStatus.PROCESSED;
+        sendEmail.accept(this.customer);
 
     }
 
@@ -69,9 +76,11 @@ public class Order {
         this.payment = payment;
     }
 
+    // Function lambda
+    private final Function<Double, Double> discountFunction = amount ->
+            (this.discount != null) ? amount - this.discount.value() : amount;
+
     public double applyDiscount(double amount) {
-        if (this.discount != null)
-            return amount - this.discount.value;
-        return amount;
+        return discountFunction.apply(amount);
     }
 }
