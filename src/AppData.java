@@ -19,11 +19,6 @@ public class AppData {
         readOrderData();
         readProductsData();
         readOrderItemsData();
-
-        System.out.println(allCustomers.stream().toList());
-        System.out.println(allOrders.stream().toList());
-        System.out.println(allOrderItems.stream().toList());
-        System.out.println(allProducts.stream().toList());
     }
 
     private static void readCustomerData(){
@@ -62,6 +57,7 @@ public class AppData {
                             .filter(cust -> cust.customerID == Integer.parseInt(values[0]))
                             .findFirst().orElseThrow(IllegalStateException::new);
 
+                // DateTime API
                 LocalDateTime orderTimestamp = LocalDateTime.parse(values[2], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
                 Order order = new Order(orderCust, values[1], orderTimestamp);
                 allOrders.add(order);

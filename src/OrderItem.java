@@ -5,6 +5,10 @@ public class OrderItem {
     private int quantity;
     static int itemIDCounter = 10000;
 
+    public Product getProduct() {
+        return product;
+    }
+
     public OrderItem(Order order, int quantity, Product product) {
         this.itemID = itemIDCounter++;
         this.order = order;
@@ -14,5 +18,25 @@ public class OrderItem {
 
     public double getItemSubTotal() {
         return quantity * product.getPrice();
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

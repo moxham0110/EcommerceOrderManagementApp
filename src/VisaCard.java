@@ -1,2 +1,2 @@
-public class VisaCard extends BankCard {
+public final class VisaCard extends BankCard {
 }

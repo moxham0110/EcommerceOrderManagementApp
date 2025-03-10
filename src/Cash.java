@@ -1,3 +1,2 @@
-public final class Cash extends PaymentMethod {
-
+public final class Cash implements PaymentMethod {
 }

@@ -1,2 +1,2 @@
-public non-sealed class BankCard extends PaymentMethod{
+public non-sealed class BankCard implements PaymentMethod{
 }

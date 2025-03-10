@@ -45,15 +45,23 @@ public class Order {
     Consumer<Customer> sendEmail = customer ->
             System.out.println("Sending email to " + customer.getEmail());
 
-    public void processOrder(Payment payment) {
-        //todo: reduce stockCount for product stockCount - quantity in orderitem
-        //todo: If stockCount is below zero then throw exception and cancel order.
+    public void processOrder() {
+        if (this.payment == null){
+            throw new IllegalStateException("No payment taken for this order!");
+        }
 
+        for (OrderItem item : this.items) {
+            Product product = item.getProduct();
+            int newStockCount = product.getStockCount() - item.getQuantity();
+            product.setStockCount(newStockCount);
 
-        setPayment(payment);
+            if (newStockCount < 0) {
+                throw new IllegalStateException("Not enough stock for product: " + product.getName());
+            }
+        }
+
         this.status = OrderStatus.PROCESSED;
         sendEmail.accept(this.customer);
-
     }
 
     public void shipOrder() {
@@ -76,11 +84,30 @@ public class Order {
         this.payment = payment;
     }
 
+
+    public void takePayment(String paymentMethod) {
+        // Switch expressions and pattern matching
+        PaymentMethod method = switch (paymentMethod.toLowerCase()) {
+            case "visacard" -> new VisaCard();
+            case "mastercard" -> new MasterCard();
+            case "cash" -> new Cash();
+            default -> throw new IllegalArgumentException("Unsupported payment method: " + paymentMethod);
+        };
+
+        // Create a Payment instance with the current timestamp
+        Payment payment = new Payment(this, method, LocalDateTime.now());
+        setPayment(payment);
+    }
+
     // Function lambda
     private final Function<Double, Double> discountFunction = amount ->
             (this.discount != null) ? amount - this.discount.value() : amount;
 
     public double applyDiscount(double amount) {
         return discountFunction.apply(amount);
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }

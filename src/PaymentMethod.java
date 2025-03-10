@@ -1,4 +1,2 @@
-abstract sealed class PaymentMethod permits BankCard, Cash {
-
-
+abstract sealed interface PaymentMethod permits BankCard, Cash {
 }

@@ -1,2 +1,2 @@
-public class MasterCard extends BankCard {
+public final class MasterCard extends BankCard {
 }
